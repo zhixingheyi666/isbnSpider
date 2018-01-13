@@ -1,0 +1,8 @@
+1490668240730	geckodriver	INFO	Listening on 127.0.0.1:50436
+1490668242741	mozprofile::profile	INFO	Using profile path C:\Users\lenovo\AppData\Local\Temp\rust_mozprofile.ug0rxQYxODCM
+1490668242751	geckodriver::marionette	INFO	Starting browser C:\Program Files (x86)\Mozilla Firefox\firefox.exe with args []
+1490668242771	geckodriver::marionette	INFO	Connecting to Marionette on localhost:50443
+1490668243885	Marionette	INFO	Listening on port 50443
+1490668244561	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 7100] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 345
+[Child 7100] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 345

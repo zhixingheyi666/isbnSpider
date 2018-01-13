@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js no-auth ">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-ZA-Response-Id" content="0002ee731982719f">
+<meta http-equiv="X-ZA-Experiment" content="default:None">
+
+<title>
+
+
+如何使vim下开发python调试更方便？ - Python - 知乎
+
+
+</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://questions/20271508">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="mobile-agent" content="format=html5;url=https://www.zhihu.com/question/20271508">
+<meta id="znonce" name="znonce" content="7e8c53dd977441ad85666dd980b3df7c">
+
+
+
+<link rel="apple-touch-icon" href="https://static.zhihu.com/static/revved/img/ios/touch-icon-152.87c020b9.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://static.zhihu.com/static/revved/img/ios/touch-icon-120.496c913b.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://static.zhihu.com/static/revved/img/ios/touch-icon-76.dcf79352.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://static.zhihu.com/static/revved/img/ios/touch-icon-60.9911cffb.png" sizes="60x60">
+
+
+<link rel="shortcut icon" href="https://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="https://static.zhihu.com/static/search.xml" title="知乎" />
+<link rel="stylesheet" href="https://static.zhihu.com/static/revved/-/css/z.755d7b1e.css">
+
+
+
+<meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg" />
+
+
+
+<!--[if lt IE 9]>
+<script src="https://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="https://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+<script src="https://static.zhihu.com/static/revved/-/js/instant.14757a4a.js"></script>
+
+
+
+
+</head>
+
+<body class="zhi ">
+
+
+
+
+<div role="navigation" class="zu-top" data-za-module="TopNavBar">
+<div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
+<a href="/" class="zu-top-link-logo" id="zh-top-link-logo" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_zhihu_logo">知乎</a>
+
+
+
+<ul class="topnav-noauth clearfix">
+<li>
+<a href="javascript:;" class="js-signup-noauth"><i class="zg-icon zg-icon-dd-home"></i>注册知乎</a>
+</li>
+<li>
+<a href="javascript:;" class="js-signin-noauth">登录</a>
+</li>
+</ul>
+
+
+
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form">
+
+
+
+<input type="hidden" name="type" value="content">
+<label for="q" class="hide-text">知乎搜索</label><input type="text" class="zu-top-search-input" id="q" name="q" autocomplete="off" value="" maxlength="100" placeholder="搜索你感兴趣的内容...">
+<button type="submit" class="zu-top-search-button"><span class="hide-text">搜索</span><span class="sprite-global-icon-magnifier-dark"></span></button>
+</form>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-nav-home">
+<a class="zu-top-nav-link" href="/" id="zh-top-link-home" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_home">首页</a>
+</li>
+
+
+
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-topic">
+<a class="zu-top-nav-link" href="/topic" id="top-nav-dd-topic">话题</a>
+</li>
+
+<li class="zu-top-nav-li " id="zh-top-nav-explore">
+<a class="zu-top-nav-link" href="/explore">发现</a>
+</li>
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content message">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content user" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content thanks" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 &raquo;</a>
+<a href="/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置" ><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-redirect-info" style="display:none"></div>
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-notification-summary" style="display:none;">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<span class="zu-global-notify-icon"></span>
+<ul class="zu-question-notify-wrap">
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="zg-wrap zu-main clearfix with-indention-votebar" itemscope itemtype="http://schema.org/Question" id="zh-single-question-page" data-urltoken="20271508" role="main">
+<div class="zu-main-content">
+<div class="zu-main-content-inner">
+
+
+<meta itemprop="isTopQuestion" content="false" />
+<meta itemprop="visitsCount" content="83113" />
+
+
+<div class="zm-tag-editor zg-section">
+<div class="zm-tag-editor-labels zg-clear">
+
+<a class="zm-item-tag"
+href="/topic/19552832"
+data-hovercard="t$b$19552832" data-token="19552832" data-topicid="872" data-za-element-name="Title">
+Python
+</a>
+
+<a class="zm-item-tag"
+href="/topic/19570193"
+data-hovercard="t$b$19570193" data-token="19570193" data-topicid="6670" data-za-element-name="Title">
+Vim
+</a>
+
+<a class="zm-item-tag"
+href="/topic/19660363"
+data-hovercard="t$b$19660363" data-token="19660363" data-topicid="36806" data-za-element-name="Title">
+软件调试
+</a>
+
+</div>
+</div>
+<div id="zh-question-title" data-editable="false">
+<h2 class="zm-item-title">
+
+<span class="zm-editable-content">如何使vim下开发python调试更方便？</span>
+
+</h2>
+</div>
+<div id="zh-question-detail" class="zm-item-rich-text" data-resourceid="288787" data-action="/question/detail">
+
+<div class="zm-editable-content"></div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el clearfix" id="zh-question-meta-wrap">
+<div class="zm-meta-panel">
+
+<a href="#" name="addcomment" class="toggle-comment meta-item">
+<i class="z-icon-comment"></i>添加评论
+</a>
+<a href="#" name="share" class="share meta-item">
+<i class="z-icon-share"></i>分享
+</a>
+
+</div>
+<div class="panel-container">
+
+</div>
+</div>
+
+
+<div class="zh-answers-title clearfix">
+
+<div id="zh-answers-filter" class="Sorter">
+
+<span class="lbl">默认排序</span>
+<a class="lbl" href="/question/20271508?sort=created">按时间排序</a>
+
+<i class="zg-icon zg-icon-double-arrow"></i>
+</div>
+
+<h3 data-num="23" id="zh-question-answer-num">23 个回答</h3>
+</div>
+
+<div id="zh-question-answer-wrap" data-pagesize="10" class="zh-question-answer-wrapper" data-widget="navigable" data-navigable-options="{&quot;items&quot;: &quot;&gt;.zm-item-answer&quot;}" data-init="{&quot;params&quot;: {&quot;url_token&quot;: 20271508, &quot;pagesize&quot;: 10, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}">
+
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemprop="topAnswer"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="47185463"
+data-atoken="129182541"
+data-collapsed="0"
+data-created="1477890062"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/129182541">
+<meta itemprop="answer-id" content="47185463">
+<meta itemprop="answer-url-token" content="129182541">
+<a class="zg-anchor-hidden" name="answer-47185463"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">225</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="javascript:;"
+
+><img src="https://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+<span class="name">知乎用户</span></span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="225">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">225</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="赖明星" data-entry-url="/question/20271508/answer/129182541">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+<img src="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_200x112.png" data-rawwidth="1366" data-rawheight="768" class="origin_image inline-img zh-lightbox-thumb" data-original="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_r.png">
+刚开始用vim写python的时候，感觉很不方便，于是就用了图形界面的<a href="//link.zhihu.com/?target=https%3A//www.jetbrains.com/pycharm/" class=" wrap external" target="_blank" rel="nofollow noreferrer">Pycharm<i class="icon-external"></i></a>(如果是windows用户，这个IDE应该是标配)，用了一段时间也没有觉得有什么不好，不过，脑子里总是会想起《<a href="//link.zhihu.com/?target=http%3A//book.douban.com/subject/1152111/" class=" wrap external" target="_blank" rel="nofollow noreferrer">程序员修炼之道<i class="icon-external"></i></a>》中，那句”最好是精通一种编辑器，并将其用于所有编辑任务。…
+
+<a href="/question/20271508/answer/129182541" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+<p>刚开始用vim写python的时候，感觉很不方便，于是就用了图形界面的<a href="//link.zhihu.com/?target=https%3A//www.jetbrains.com/pycharm/" class=" wrap external" target="_blank" rel="nofollow noreferrer">Pycharm<i class="icon-external"></i></a>(如果是windows用户，这个IDE应该是标配)，用了一段时间也没有觉得有什么不好，不过，脑子里总是会想起《<a href="//link.zhihu.com/?target=http%3A//book.douban.com/subject/1152111/" class=" wrap external" target="_blank" rel="nofollow noreferrer">程序员修炼之道<i class="icon-external"></i></a>》中，那句”最好是精通一种编辑器，并将其用于所有编辑任务。如果不坚持使用一种编辑器，可能会面临现代的巴别特大混乱。”所以，<em>我又决定用vim来写python</em>。</p><br><p>在知乎上有很多<a href="http://www.zhihu.com/question/19655689" class="internal">vim写python的插件</a>推荐，不过我感觉很多人回答都不动脑子，这些回答主要有两个问题：</p><ol><li>回答不全面，很多人都只是推荐一款插件，然后贴个链接就完了，如果要想很爽的用vim写python，可以肯定的是，一款插件是不够的</li><li>贴上自己的配置，说自己的配置有多爽，然后就不管了。如果是一个vim新手，是用不着这么多配置的，如果是一个vim老手，也不会放弃自己原有的配置，使用别人自定义、认为很爽的个性化配置</li></ol><br><p>所以，这些回答都不是很靠谱。我争取推荐一些靠谱的东西，那么，就开始吧！</p><br><b>1. 一键执行</b><br><p>这个不是插件，而是一个自定义的vim配置。很多时候我们写python，都是写一些较为简单的脚本，那么，这个一键执行的功能就非常实用，我个人感觉最实用的是在写单元测试的时候，写完一个单元测试，都不用退出vim，立即执行就能看到结果。</p><p>将下面的配置放到.vimrc文件即可：</p><br><br><div class="highlight"><pre><code class="language-vim"><span class="c">    """"""""""""""""""""""</span>
+<span class="c">    "Quickly Run</span>
+<span class="c">    """"""""""""""""""""""</span>
+    map <span class="p">&lt;</span>F5<span class="p">&gt;</span> :<span class="k">call</span> CompileRunGcc<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+    func<span class="p">!</span> CompileRunGcc<span class="p">()</span>
+        exec <span class="s2">"w"</span>
+        <span class="k">if</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'c'</span>
+            exec <span class="s2">"!g++ % -o %&lt;"</span>
+            exec <span class="s2">"!time ./%&lt;"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'cpp'</span>
+            exec <span class="s2">"!g++ % -o %&lt;"</span>
+            exec <span class="s2">"!time ./%&lt;"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'java'</span>
+            exec <span class="s2">"!javac %"</span>
+            exec <span class="s2">"!time java %&lt;"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'sh'</span>
+            :<span class="p">!</span>time bash %
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'python'</span>
+            exec <span class="s2">"!time python2.7 %"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'html'</span>
+            exec <span class="s2">"!firefox % &amp;"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'go'</span>
+<span class="c">    "        exec "!go build %&lt;"</span>
+            exec <span class="s2">"!time go run %"</span>
+        <span class="k">elseif</span> &amp;<span class="k">filetype</span> <span class="p">==</span> <span class="s1">'mkd'</span>
+            exec <span class="s2">"!~/.vim/markdown.pl % &gt; %.html &amp;"</span>
+            exec <span class="s2">"!firefox %.html &amp;"</span>
+        <span class="k">endif</span>
+    endfunc
+</code></pre></div><b>2. 代码补全(snipMate)</b><br><p>代码补全能够显著地减少你敲键的次数，并且将你从琐碎的语法中解放出来。说白了，就是帮你写代码！</p><br><p>如果使用snipMate插件，那么，当你输入ifmain以后按tab键，将会自动为你生成下面的代码：</p><br><div class="highlight"><pre><code class="language-python">    <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+</code></pre></div><p>输入for，再按tab键，生成如下代码：</p><br><div class="highlight"><pre><code class="language-pycon"><span class="go">    for needle in haystack:</span>
+<span class="go">        # code...</span>
+</code></pre></div><br><p>代码补全有两款插件都比较不错，可以根据自己的需要进行选择：</p><ol><li><a href="//link.zhihu.com/?target=https%3A//github.com/garbas/vim-snipmate" class=" wrap external" target="_blank" rel="nofollow noreferrer">snipMate<i class="icon-external"></i></a></li><li><a href="//link.zhihu.com/?target=https%3A//github.com/drmingdrmer/xptemplate" class=" wrap external" target="_blank" rel="nofollow noreferrer">xptemplate<i class="icon-external"></i></a></li></ol><b>3. 语法检查(Syntastic)</b><br><p><a href="//link.zhihu.com/?target=https%3A//github.com/scrooloose/syntastic" class=" wrap external" target="_blank" rel="nofollow noreferrer">syntastic<i class="icon-external"></i></a>是一款强大的语法检查插件，当你保存源文件时，它就会执行，并提示用户哪些代码存在语法错误，哪些代码风格不符合规范，并给出具体的提示。</p><p>例如，python代码风格默认设置为PEP8,即使你不知道PEP8的风格，只要你使用syntastic插件，并根据它给出的提示修改，那么，你就能写出完全符合PEP8风格的代码！</p><br><b>4. 编程提示(jedi-vim)</b><br><p><a href="//link.zhihu.com/?target=https%3A//github.com/davidhalter/jedi-vim" class=" wrap external" target="_blank" rel="nofollow noreferrer">jedi-vim<i class="icon-external"></i></a>是基于jedi的自动补全插件，与Syntastic 不同的是，该插件更加智能，更贴切的称呼是”编程提示”，而不是代码补全插件。</p><br><p>如下图所示：</p><noscript><img src="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_b.png" data-rawwidth="1366" data-rawheight="768" class="origin_image zh-lightbox-thumb" width="1366" data-original="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_r.png"></noscript><img src="//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg" data-rawwidth="1366" data-rawheight="768" class="origin_image zh-lightbox-thumb lazy" width="1366" data-original="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_r.png" data-actualsrc="https://pic2.zhimg.com/v2-ee6ec410fbc783f9692d2c5b6f4e151d_b.png"><br><p>可以说，这个插件是写vim的标配，并且，真正让vim写python变成一件轻松愉快的事情。</p><p><em>注意：</em> 安装惊jedi-vim插件，需要在电脑中安装jedi，根据jedi-vim给出的提示，正常按装即可。不过我之前遇到一个问题，在公司的虚拟机里面，安装以后不起作用，google了半天没有成功，最后更新了一下vim就可以了，希望遇到相同问题的人，能够看到。</p><br><br><div class="highlight"><pre><code class="language-text">sudo aptitude install vim-gnome vim vim-common vim-tiny
+</code></pre></div><br><br>至于调试，难道你们不是用ipdb的吗？如果不是，赶紧用用，你们会喜欢的。
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="47185463-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" data-tooltip="s$t$发布于 2016-10-31" target="_blank" href="/question/20271508/answer/129182541">编辑于 2017-01-26</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>32 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="2">
+<meta name="disableCopyAvatar" content="https://pic1.zhimg.com/da8e974dc_m.jpg">
+
+<span class="zg-bull">&bull;</span>
+
+
+<a href="/copyright/apply?answer=129182541" target="_blank" class="meta-item copyright">申请转载</a>
+
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="947145"
+data-atoken="14564996"
+data-collapsed="0"
+data-created="1338539295"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/14564996">
+<meta itemprop="answer-id" content="947145">
+<meta itemprop="answer-url-token" content="14564996">
+<a class="zg-anchor-hidden" name="answer-947145"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">26</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/lijigang.com" target="_blank" data-hovercard="p$t$lijigang.com"
+
+><img src="https://pic4.zhimg.com/a7cec213f_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$lijigang.com"
+target="_blank" href="/people/lijigang.com"
+>李继刚</a></span><span title="三十而立" class="bio">
+三十而立
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="26">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">26</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="李继刚" data-entry-url="/question/20271508/answer/14564996">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+照这个来： <b>Turning Vim into a modern python IDE</b> <a href="//link.zhihu.com/?target=http%3A//sontek.net/turning-vim-into-a-modern-python-ide" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">sontek.net/turning-vim-</span><span class="invisible">into-a-modern-python-ide</span><span class="ellipsis"></span><i class="icon-external"></i></a> 我配置后的图： 
+
+<a href="/question/20271508/answer/14564996" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+照这个来： <b>Turning Vim into a modern python IDE</b><br><a href="//link.zhihu.com/?target=http%3A//sontek.net/turning-vim-into-a-modern-python-ide" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">sontek.net/turning-vim-</span><span class="invisible">into-a-modern-python-ide</span><span class="ellipsis"></span><i class="icon-external"></i></a><br><br>我配置后的图：<br><noscript><img src="https://pic1.zhimg.com/cbae5a2ed432df9c0cce14368ad74644_b.jpg" class="content_image"></noscript><img src="//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg" class="content_image lazy" data-actualsrc="https://pic1.zhimg.com/cbae5a2ed432df9c0cce14368ad74644_b.jpg">
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="947145-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" data-tooltip="s$t$发布于 2012-06-01" target="_blank" href="/question/20271508/answer/14564996">编辑于 2012-07-05</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="26590928"
+data-atoken="77911173"
+data-collapsed="0"
+data-created="1450711638"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/77911173">
+<meta itemprop="answer-id" content="26590928">
+<meta itemprop="answer-url-token" content="77911173">
+<a class="zg-anchor-hidden" name="answer-26590928"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">106</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/windoze" target="_blank" data-hovercard="p$t$windoze"
+
+><img src="https://pic2.zhimg.com/b7b47a8e1_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$windoze"
+target="_blank" href="/people/windoze"
+>徐辰</a></span><span title="GOP SOOP GHOP Coder" class="bio">
+GOP SOOP GHOP Coder
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="106">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">106</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="徐辰" data-entry-url="/question/20271508/answer/77911173">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+打开vi，输入： :!wget https://download.jetbrains.com/python/pycharm-community-5.0.2.tar.gz
+:!tar xvfz pycharm-community-5.0.2.tar.gz
+:!pycharm-community-5.0.2/bin/pycharm.sh然后你就可以愉快的写Python程序了。
+
+<a href="/question/20271508/answer/77911173" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+打开vi，输入：<br><div class="highlight"><pre><code class="language-text">:!wget https://download.jetbrains.com/python/pycharm-community-5.0.2.tar.gz
+:!tar xvfz pycharm-community-5.0.2.tar.gz
+:!pycharm-community-5.0.2/bin/pycharm.sh
+</code></pre></div>然后你就可以愉快的写Python程序了。
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="26590928-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/77911173">发布于 2015-12-21</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>30 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="947134"
+data-atoken="14564977"
+data-collapsed="0"
+data-created="1338539071"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/14564977">
+<meta itemprop="answer-id" content="947134">
+<meta itemprop="answer-url-token" content="14564977">
+<a class="zg-anchor-hidden" name="answer-947134"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">26</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="javascript:;"
+
+><img src="https://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+<span class="name">知乎用户</span></span><span title="程序员" class="bio">
+程序员
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="26">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">26</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="猛禽" data-entry-url="/question/20271508/answer/14564977">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+.vimrc文件里加这个配置，按F5即可运行当前.py文件，辅以unittest即可。 au BufRead *.py map &lt;buffer&gt; &lt;F5&gt; :w&lt;CR&gt;:!/usr/bin/env python % &lt;CR&gt;
+
+<a href="/question/20271508/answer/14564977" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+.vimrc文件里加这个配置，按F5即可运行当前.py文件，辅以unittest即可。<br>au BufRead *.py map &lt;buffer&gt; &lt;F5&gt; :w&lt;CR&gt;:!/usr/bin/env python % &lt;CR&gt;
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="947134-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/14564977">发布于 2012-06-01</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>6 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="26612071"
+data-atoken="77963659"
+data-collapsed="0"
+data-created="1450755178"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/77963659">
+<meta itemprop="answer-id" content="26612071">
+<meta itemprop="answer-url-token" content="77963659">
+<a class="zg-anchor-hidden" name="answer-26612071"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">1</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/hou-meng-95" target="_blank" data-hovercard="p$t$hou-meng-95"
+
+><img src="https://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$hou-meng-95"
+target="_blank" href="/people/hou-meng-95"
+>侯萌</a></span><span title="那顶被风吹走的帽子" class="bio">
+那顶被风吹走的帽子
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="1">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">1</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="侯萌" data-entry-url="/question/20271508/answer/77963659">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+ipython 用过的都说好
+
+<a href="/question/20271508/answer/77963659" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+ipython<br>用过的都说好
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="26612071-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/77963659">发布于 2015-12-22</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="4793389"
+data-atoken="23896518"
+data-collapsed="0"
+data-created="1396058049"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/23896518">
+<meta itemprop="answer-id" content="4793389">
+<meta itemprop="answer-url-token" content="23896518">
+<a class="zg-anchor-hidden" name="answer-4793389"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">8</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/lin-shao-wei-88" target="_blank" data-hovercard="p$t$lin-shao-wei-88"
+
+><img src="https://pic1.zhimg.com/791ced520_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$lin-shao-wei-88"
+target="_blank" href="/people/lin-shao-wei-88"
+>林少维</a></span><span title="程序员，熟悉Python，Linux，Web开发，乐于分享，爱好打球" class="bio">
+程序员，熟悉Python，Linux，Web开发，乐…
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="8">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">8</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="林少维" data-entry-url="/question/20271508/answer/23896518">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+献上一翻译版本：<a href="//link.zhihu.com/?target=http%3A//python.42qu.com/11180003" class=" wrap external" target="_blank" rel="nofollow noreferrer">使用Vim打造现代化的Python IDE- feisky（盛大云·软件开发）<i class="icon-external"></i></a>对照这些步骤来配置。 对应原文：<a href="//link.zhihu.com/?target=http%3A//sontek.net/blog/detail/turning-vim-into-a-modern-python-ide" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">sontek.net/blog/detail/</span><span class="invisible">turning-vim-into-a-modern-python-ide</span><span class="ellipsis"></span><i class="icon-external"></i></a>
+
+<a href="/question/20271508/answer/23896518" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+献上一翻译版本：<a href="//link.zhihu.com/?target=http%3A//python.42qu.com/11180003" class=" wrap external" target="_blank" rel="nofollow noreferrer">使用Vim打造现代化的Python IDE- feisky（盛大云·软件开发）<i class="icon-external"></i></a>对照这些步骤来配置。<br>对应原文：<a href="//link.zhihu.com/?target=http%3A//sontek.net/blog/detail/turning-vim-into-a-modern-python-ide" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">sontek.net/blog/detail/</span><span class="invisible">turning-vim-into-a-modern-python-ide</span><span class="ellipsis"></span><i class="icon-external"></i></a>
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="4793389-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" data-tooltip="s$t$发布于 2014-03-29" target="_blank" href="/question/20271508/answer/23896518">编辑于 2014-03-29</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="947092"
+data-atoken="14564869"
+data-collapsed="0"
+data-created="1338538339"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/14564869">
+<meta itemprop="answer-id" content="947092">
+<meta itemprop="answer-url-token" content="14564869">
+<a class="zg-anchor-hidden" name="answer-947092"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">5</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/zhou-xi-21-76" target="_blank" data-hovercard="p$t$zhou-xi-21-76"
+
+><img src="https://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$zhou-xi-21-76"
+target="_blank" href="/people/zhou-xi-21-76"
+>周西</a></span><span title="pythoner，关注web开发技术" class="bio">
+pythoner，关注web开发技术
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="5">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">5</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="周西" data-entry-url="/question/20271508/answer/14564869">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+开一个终端进行vim编辑，另一个终端命令行运行编辑的文件 参考猛禽 的回答，求折叠
+
+<a href="/question/20271508/answer/14564869" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+开一个终端进行vim编辑，另一个终端命令行运行编辑的文件<br>参考猛禽 的回答，求折叠
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="947092-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" data-tooltip="s$t$发布于 2012-06-01" target="_blank" href="/question/20271508/answer/14564869">编辑于 2012-06-01</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="7600372"
+data-atoken="30539743"
+data-collapsed="0"
+data-created="1410708260"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/30539743">
+<meta itemprop="answer-id" content="7600372">
+<meta itemprop="answer-url-token" content="30539743">
+<a class="zg-anchor-hidden" name="answer-7600372"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">5</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/jarvys" target="_blank" data-hovercard="p$t$jarvys"
+
+><img src="https://pic4.zhimg.com/v2-7d29295dcae2f79d8ace62ec81270b4f_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$jarvys"
+target="_blank" href="/people/jarvys"
+>杨辰</a></span><span title="Coder" class="bio">
+Coder
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="5">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">5</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="杨辰" data-entry-url="/question/20271508/answer/30539743">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+老老实实用pycharm
+
+<a href="/question/20271508/answer/30539743" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+老老实实用pycharm
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="7600372-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/30539743">发布于 2014-09-14</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="947179"
+data-atoken="14565082"
+data-collapsed="0"
+data-created="1338540037"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/14565082">
+<meta itemprop="answer-id" content="947179">
+<meta itemprop="answer-url-token" content="14565082">
+<a class="zg-anchor-hidden" name="answer-947179"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">4</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/ch-linghu" target="_blank" data-hovercard="p$t$ch-linghu"
+
+><img src="https://pic4.zhimg.com/693c22e0c741365ed53edcc873641ef3_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$ch-linghu"
+target="_blank" href="/people/ch-linghu"
+>令狐虫</a></span><span title="神马都不知道" class="bio">
+神马都不知道
+</span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="4">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">4</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="令狐虫" data-entry-url="/question/20271508/answer/14565082">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+这个问题应该可以分成 开发 和 调试 两个部分吧。 开发的话可以参考这两篇： <a href="//link.zhihu.com/?target=http%3A//www.mikeshi.me/wordpress/%3Fp%3D281" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">mikeshi.me/wordpress/?</span><span class="invisible">p=281</span><span class="ellipsis"></span><i class="icon-external"></i></a> <a href="//link.zhihu.com/?target=http%3A//www.mikeshi.me/wordpress/%3Fp%3D286" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">mikeshi.me/wordpress/?</span><span class="invisible">p=286</span><span class="ellipsis"></span><i class="icon-external"></i></a> 主要就是安装一些插件使得开发更加方便一些。我个人是安装了一些文件管理方面的插件（方便项目管理），其他部分的比较少用。 调试部…
+
+<a href="/question/20271508/answer/14565082" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+这个问题应该可以分成 开发 和 调试 两个部分吧。<br><br>开发的话可以参考这两篇：<br><a href="//link.zhihu.com/?target=http%3A//www.mikeshi.me/wordpress/%3Fp%3D281" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">mikeshi.me/wordpress/?</span><span class="invisible">p=281</span><span class="ellipsis"></span><i class="icon-external"></i></a><br><a href="//link.zhihu.com/?target=http%3A//www.mikeshi.me/wordpress/%3Fp%3D286" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">mikeshi.me/wordpress/?</span><span class="invisible">p=286</span><span class="ellipsis"></span><i class="icon-external"></i></a><br>主要就是安装一些插件使得开发更加方便一些。我个人是安装了一些文件管理方面的插件（方便项目管理），其他部分的比较少用。<br><br>调试部分的话，我个人而言，已经很少使用那种step by step的调试方法了，绝大部分时间都是用观察错误信息+print的方式进行调试。得益于python统一的异常输出，在python里用这个方法更加得心应手一些，错误定位和分析错误原因一般都比较快。<br><br>开发的时候使用unittest是一个非常好的习惯，可以很大程度上减少逻辑上的错误。python自带了unittest框架。另外推荐nose ( <a href="//link.zhihu.com/?target=http%3A//readthedocs.org/docs/nose/en/latest/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">readthedocs.org/docs/no</span><span class="invisible">se/en/latest/</span><span class="ellipsis"></span><i class="icon-external"></i></a> )，可以让unittest更加方便。
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="947179-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/14565082">发布于 2012-06-01</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="47386524"
+data-atoken="129683431"
+data-collapsed="0"
+data-created="1478170663"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+>
+<link itemprop="url" href="/question/20271508/answer/129683431">
+<meta itemprop="answer-id" content="47386524">
+<meta itemprop="answer-url-token" content="129683431">
+<a class="zg-anchor-hidden" name="answer-47386524"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">1</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"
+
+href="/people/zhi-jian-shang-de-zhe-xue" target="_blank" data-hovercard="p$t$zhi-jian-shang-de-zhe-xue"
+
+><img src="https://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar avatar"
+></a>
+
+<span class="summary-wrapper">
+<span class="author-link-line">
+
+<a class="author-link"
+data-hovercard="p$t$zhi-jian-shang-de-zhe-xue"
+target="_blank" href="/people/zhi-jian-shang-de-zhe-xue"
+>指尖上的哲学</a></span>
+</span>
+</div>
+<div class="zm-item-vote-info" data-votecount="1">
+
+
+
+<span class="voters text"><a href="#" class="more text"><span class="js-voteCount">1</span>&nbsp;人赞同</a></span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="288787" data-action="/answer/content" data-author-name="指尖上的哲学" data-entry-url="/question/20271508/answer/129683431">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+我就很好奇为什么不直接用eclipse而非要用VIM呢？
+
+<a href="/question/20271508/answer/129683431" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+我就很好奇为什么不直接用eclipse而非要用VIM呢？
+</div>
+
+
+</div>
+<a class="zg-anchor-hidden ac" name="47386524-comment"></a>
+<div class="zm-item-meta answer-actions clearfix js-contentActions">
+<div class="zm-meta-panel">
+
+<a itemprop="url" class="answer-date-link meta-item" target="_blank" href="/question/20271508/answer/129683431">发布于 2016-11-03</a>
+
+<a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide js-thank" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide js-share"><i class="z-icon-share"></i>分享</a>
+
+<a href="#" class="meta-item zu-autohide js-collect"><i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" class="meta-item zu-autohide js-noHelp">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+
+
+
+
+<meta name="copyrightStatus" content="1">
+<meta name="disableCopyAvatar" content="">
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright">
+作者保留权利
+</a>
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+
+<div id="zh-question-collapsed-link" class="zu-question-collap-title" style="display:none" >
+<a href="javascript:;" name="expand" class="zg-link-gray" id="zh-question-collapsed-switcher">
+<span id="zh-question-collapsed-num">2</span> 个回答被折叠
+</a>
+（<a target="_blank" href="/question/20120168" class="zg-link-gray">为什么？</a>）
+</div>
+<div id="zh-question-collapsed-wrap" class="zh-question-answer-wrapper" style="display:none"></div>
+<a name="draft"></a>
+<div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
+<div class="zm-editable-tip"></div>
+<div class="zm-editable-content"></div>
+</div>
+<!-- 版权演示 -->
+
+<script type="text/x-template" id="copyright-demo-template">
+<article>
+
+<section>
+<p class="copyright-demo-title"> 这是你的回答正文 </p>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section>
+<p class="copyright-demo-title"> 当其他人想复制你的一段回答 </p>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region1">
+<span class="copyright-ico-indicator" id="copyright-demo-indicator"></span>
+</div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region2"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region3"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region4"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section id="copyright-demo-frame3">
+<p class="copyright-demo-title copyright-demo-effect"> 复制将受限，同时会弹出提醒 </p>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region"></div>
+<span class="copyright-ico-pointer copyright-demo-pointer"></span>
+</section>
+</article>
+</script>
+
+
+<script type="text/template" class="oauth-success-template--wechat">
+<div class="oauth-success oauth-success--wechat">
+<img src="/static/img/zhihu_wechat.png" class="oauth-success-image">
+<h2 class="oauth-success-title">成功绑定微信帐号</h2>
+<p class="oauth-success-tip">下次登录知乎可直接使用「微信快捷登录」</p>
+</div>
+</script>
+
+
+</div>
+</div>
+
+
+<div class="zu-main-sidebar" data-za-module="RightSideBar">
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div class="SignFlow SignFlow--bordered" id="SidebarSignFlow">
+<div class="SignFlow-panel">
+<div class="title register">
+<h1>加入知乎</h1>
+<h2>与世界分享你的知识、经验和见解</h2>
+</div>
+<div class="view register SignupForm" data-za-module="SignUpForm">
+<form action="/register/email" method="POST">
+<div class="input-wrapper">
+<input type="text" name="fullname" aria-label="姓名" data-placeholder="姓名" required>
+</div>
+<div class="input-wrapper">
+
+<input type="text" name="phone_num" class="account" aria-label="手机号（仅支持中国大陆）" data-placeholder="手机号（仅支持中国大陆）" required>
+
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" hidden> 
+<input type="password" name="password" aria-label="密码" data-placeholder="密码（不少于 6 位）" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="input-wrapper captcha-module" data-type="en" >
+<input id="captcha" name="captcha" placeholder="验证码" required data-rule-required="true" data-msg-required="请填写验证码">
+<div class="captcha-container">
+
+<img class="js-refreshCaptcha captcha" width="120" height="30" data-tooltip="s$t$看不清楚？换一张"  alt="验证码">
+</div>
+</div>
+<div class="actions">
+
+<input type="submit" value="注册" class="submit zg-btn-blue">
+
+</div>
+<div class="sns clearfix">
+<span>已有帐号？<a href="#" class="switch-to-login">登录</a></span>
+</div>
+</form>
+</div>
+</div>
+<div class="SignFlow-panel" hidden>
+<div class="LoginForm">
+<div class="title login">
+<h1>登录知乎</h1>
+<h2>与世界分享你的知识、经验和见解</h2>
+</div>
+<div class="view login" data-za-module="SignInForm">
+<form method="POST">
+<div class="input-wrapper">
+<input type="text" name="account" class="account" aria-label="手机号或邮箱" placeholder="手机号或邮箱" required>
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" name="password" aria-label="密码" placeholder="密码" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="input-wrapper captcha-module" data-type="en" >
+<input id="captcha" name="captcha" placeholder="验证码" required data-rule-required="true" data-msg-required="请填写验证码">
+<div class="captcha-container">
+
+<img class="js-refreshCaptcha captcha" width="120" height="30" data-tooltip="s$t$看不清楚？换一张"  alt="验证码">
+</div>
+</div>
+<div class="actions">
+
+<input type="submit" value="登录" class="submit zg-btn-blue">
+
+</div>
+<div class="sns clearfix">
+<label class="remember-me"><input type="checkbox" name="remember_me" checked value="true">记住我</label>
+<span class="middot">·</span>
+<button class="unable-login" type="button">无法登录？</button>
+<button type="button" class="js-show-sns-buttons is-visible">社交帐号登录</button>
+<div class="sns-buttons">
+<button type="button" class="wechat"><span class="ico sprite-global-icon-wechat-gray"></span>微信</button>
+<button type="button" class="weibo"><span class="ico sprite-global-icon-weibo-gray"></span>微博</button>
+<button type="button" class="qq"><span class="ico sprite-global-icon-qq-gray"></span>QQ</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-side-section">
+<div class="DownloadApp">
+<button class="DownloadApp-button">
+<span class="sprite-global-icon-qrcode"></span>
+下载知乎 App
+</button>
+</div>
+</div>
+
+
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner zg-gray-normal" id="zh-question-side-header-wrap">
+<button data-follow="q:m:button" class="follow-button zg-follow zg-btn-green" data-id="288787">关注问题</button>
+
+749
+人关注该问题
+
+</div>
+</div>
+
+
+<div class="shameimaru-placeholder" data-loc="question_up" data-params='{&quot;question_token&quot;: 20271508}'></div>
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div id="zh-question-related-questions" class="zh-question-related-questions clearfix" data-za-module="RelatedQuestions">
+
+<a class="zg-right next">换一换</a>
+
+<h3>相关问题</h3>
+<ul itemprop="relatedQuestion" itemscope itemtype="http://schema.org/ItemList">
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/21747474" data-id="879955" data-za-element-name="Title">
+会一门脚本语言，学 bash 就显得浪费时间？
+</a> <span class="num">83 个回答</span><meta itemprop="followerCount" content="762" />
+</li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/23019630" data-id="1388747" data-za-element-name="Title">
+程序员新人怎样在复杂代码中找 bug？
+</a> <span class="num">93 个回答</span><meta itemprop="followerCount" content="4259" />
+</li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/34787444" data-id="6121606" data-za-element-name="Title">
+你碰到过的最难调试的 Bug 是什么样的？
+</a> <span class="num">907 个回答</span><meta itemprop="followerCount" content="13665" />
+</li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/20746635" data-id="479106" data-za-element-name="Title">
+对 Quant 而言 Python 的需求高吗，除 C++ 外还有哪些流行的编程语言？
+</a> <span class="num">23 个回答</span><meta itemprop="followerCount" content="3267" />
+</li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/19557358" data-id="2890" data-za-element-name="Title">
+Python 是否是下一个 PHP？为什么？
+</a> <span class="num">73 个回答</span><meta itemprop="followerCount" content="964" />
+</li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/21415613" data-id="746963" data-za-element-name="Title">
+一个程序只能用一种编程语言吗？
+</a> <span class="num">32 个回答</span><meta itemprop="followerCount" content="304" />
+</li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/21486259" data-id="775159" data-za-element-name="Title">
+Meta Programming 主要解决什么了问题？
+</a> <span class="num">22 个回答</span><meta itemprop="followerCount" content="613" />
+</li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/22096642" data-id="1019448" data-za-element-name="Title">
+用 vim 编辑怎样才能比 IDE 更快？
+</a> <span class="num">65 个回答</span><meta itemprop="followerCount" content="687" />
+</li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/22119753" data-id="1028729" data-za-element-name="Title">
+业余时间如何学数据分析？
+</a> <span class="num">56 个回答</span><meta itemprop="followerCount" content="14868" />
+</li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question">
+<a class="question_link" href="/question/28354642" data-id="3524553" data-za-element-name="Title">
+对于一个开源 Python 量化交易平台项目的建议有哪些？
+</a> <span class="num">27 个回答</span><meta itemprop="followerCount" content="3375" />
+</li>
+
+</ul>
+</div>
+</div>
+</div>
+
+<div class="zm-side-section" data-za-module="RelatedLives">
+<div class="SidebarListNav SidebarListNav--noFollowLink zm-side-section-inner">
+<h3>相关 Live 推荐 ⚡️</h3>
+<ul class="SidebarListNav-list">
+
+<li class="SidebarListNav-listItem" data-za-module="LiveItem" data-za-index>
+<a class="SidebarListNav-itemLink" href="https://www.zhihu.com/lives/789840559912009728" target="_blank">
+<img class="Avatar SidebarListNav-avatar" src="https://pic4.zhimg.com/258463ec3_s.jpg" srcset="https://pic4.zhimg.com/258463ec3_xs.jpg 2x" alt="Python 工程师的入门和进阶" />
+<span class="SidebarListNav-label">
+Python 工程师的入门和进阶
+</span>
+</a>
+</li>
+
+</ul>
+</div>
+</div>
+
+
+<div class="shameimaru-placeholder" data-loc="question_down" data-params='{&quot;question_token&quot;: 20271508}'></div>
+
+</div>
+
+
+</div>
+
+
+<div id="zh-footer" class="zh-footer">
+<div class="content zg-wrap clearfix">
+<ul>
+
+<li><a href="https://liukanshan.zhihu.com" target="_blank">刘看山</a></li>
+
+<li><a href="/app" target="_blank">移动应用</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="/jubao" target="_blank">举报投诉</a></li>
+<li><a href="/contact">联系我们</a></li>
+
+</ul>
+
+<span class="copy">&copy; 2017 知乎</span>
+
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="guiders2">{}</script>
+<script type="text/json" class="json-inline" data-name="current_user">["","","","-1","",0,0]</script>
+<script type="text/json" class="json-inline" data-name="user_status">[null,null,false]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null,false,false]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":0,"now":1486663765000,"abtest_mask":"------------------------------","user_attr":[0,0,0,"-","-"],"user_hash":0}</script>
+
+<script type="text/json" class="json-inline" data-name="ra-urls">{"Copyright":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/Copyright.98ac6609.js","PayUIApp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/PayUIApp.ca78ba78.js","CouponApp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/CouponApp.66b486a6.js","PaymentApp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/PaymentApp.7f16d61c.js","Community":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/Community.a79a5745.js","Report":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/Report.26635627.js","OrgOpHelp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/OrgOpHelp.f1709e97.js","common":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/common.a4dd3236.js","BalanceApp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/BalanceApp.14e3a013.js","AnswerWarrant":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/AnswerWarrant.97f134aa.js","CommentApp":"https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/CommentApp.7556991d.js"}</script>
+
+<script type="text/json" class="json-inline" data-name="current_question">{"status":"normal","editPermission":false,"qid":288787,"askAboutMember":0,"isEditLocked":false,"detailEditReasonRequired":false,"isAnon":0,"showInvitePanel":false,"isOrg":false,"isLocked":0,"urlToken":20271508}</script>
+<script type="text/json" class="json-inline" data-name="current_question_owner">false</script>
+<script type="text/json" class="json-inline" data-name="draft">[]</script>
+<script type="text/json" class="json-inline" data-name="my_answer">{}</script>
+<script type="text/json" class="json-inline" data-name="current_question_bio">{"selected_bio":null,"type":null,"value":""}</script>
+
+<script type="text/json" class="json-inline" data-name="redirect_to">""</script>
+
+
+<script src="https://static.zhihu.com/static/revved/-/js/vendor.cb14a042.js"></script>
+<script src="https://static.zhihu.com/static/revved/-/js/closure/base.6cca0b95.js"></script>
+
+<script src="https://static.zhihu.com/static/revved/-/js/closure/common.31d4e5c0.js"></script>
+
+
+<script src="https://static.zhihu.com/static/revved/-/js/closure/richtexteditor.71ca49de.js" async></script>
+<script src="https://static.zhihu.com/static/revved/-/js/closure/page-main.c075e49f.js"></script>
+<meta name="entry" content="ZH.entrySQ" data-module-id="page-main">
+
+<script type="text/zscript" znonce="7e8c53dd977441ad85666dd980b3df7c"></script>
+
+<input type="hidden" name="_xsrf" value="8f7c01a8c3aeaf80818eef36a8300dd9"/>
+</body>
+</html>
