@@ -170,27 +170,44 @@ def marcEngine(marcObj, cursor=cursor, mkconn=mkconn):
                         marc['BCid'] = mi[2:-1]
             elif k == '2001':
                 m2001 = v.split('|')
+                pre_title = ''
                 for mi in m2001[1:]:
                     if mi[0] == 'a':
                         marc['Title'] += mi[2:-1]
+                        pre_title = marc['Title']
                     elif mi[0] == 'e':
                         marc['Title'] = marc['Title'] + '[' + mi[2:-1] + ']'
+                        if not pre_title:
+                            pre_title = marc['Title']
                     elif mi[0] == 'h':
                         marc['Title'] = marc['Title'] + '（' + mi[2:-1] + '）'
+                        if not pre_title:
+                            pre_title = marc['Title']
                     elif mi[0] == 'i':
                         marc['Title'] = marc['Title'] + '，' + mi[2:-1]
+                        if not pre_title:
+                            pre_title = marc['Title']
                     elif mi[0] == 'f':
                         marc['Writer'] = mi[2:-1]
+                # 如果title字段值超长，那么仅保留第一个书名
+                if len(marc['Title']) > 40:
+                    marc['Title'] = pre_title[:40]
             elif k == '300':
                 m300 = v.split('|')
                 for mi in m300[1:]:
                     if mi[0] == 'a':
                         marc['Epitome'] = marc['Epitome'] + mi[2:-1] + ' '
+                        # Epitome在sql数据库字段为 varchar 200，当sql encode 数据后的
+                        # 长度超过200，程序将报错，故限制本字段(一般是中文字符)的字符个数为96个
+                        marc['Epitome'] = marc['Epitome'][:96]
             elif k == '330':
                 m330 = v.split('|')
                 for mi in m330[1:]:
                     if mi[0] == 'a':
                         marc['Epitome'] = marc['Epitome'] + mi[2:-1] + ' '
+                        # Epitome在sql数据库字段为 varchar 200，当sql encode 数据后的
+                        # 长度超过200，程序将报错，故限制本字段(一般是中文字符)的字符个数为96个
+                        marc['Epitome'] = marc['Epitome'][:96]
             elif k == '215':
                 m215 = v.split('|')
                 for mi in m215[1:]:
@@ -235,9 +252,35 @@ def marcEngine(marcObj, cursor=cursor, mkconn=mkconn):
                         marc['PublishDate'] = mi[2:-1]
         for k, v in marc.items():
             logger.info('|{}|--|{}|'.format(k, v))
+
+        """
+        # # 检查语句已经放在写入 preisbn 表之前的语句(函数isbnTosql)中, 所以下面这段没有必要，就注释掉了
+        # # 检查isbn是否已经添加过了
+        sql_check0 = 'select isbn from attbooklist where isbn = ?'
+        sql_check1 = 'select isbn from booklist where isbn = ?'
+        recorded = False
+        cursor.execute(sql_check0,marc['ISBN'])
+        if cursor.fetchall():
+            recorded = True
+        cursor.execute(sql_check0,marc['ISBN'])
+        if cursor.fetchall():
+            recorded = True
+            # def find_value_error(marc,cursor):
+        """
+
+        def find_value_error():
+            for k,v in marc.items():
+                if k == 'id':
+                    continue
+                try:
+                    sql = """INSERT INTO  Atttt({}) VALUES(?)""".format(k)
+                    cursor.execute(sql, v)
+                except:
+                    logger.exception(str(k) +'\n' + str(v))
+
         sql = """INSERT INTO  AttBooklist (ISBN, BCid, Title, Writer, Epitome, Pages, Price, PublishDate, PageMode,
-                    Version, extName, keyword, publish, adds)\
-                    VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )"""
+            Version, extName, keyword, publish, adds)\
+            VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )"""
         # sql = """INSERT INTO AtestBooklist (ISBN, BCid, Title, Writer, Epitome, Pages, Price, PageMode)\
         #             VALUES( ?, ?, ?, ?, ?, ?, ?, ? )"""
         # cursor.execute(sql, marc['ISBN'], marc['BCid'], marc['Title'], marc['Writer'], marc['Epitome'], marc['Pages'],
@@ -255,8 +298,9 @@ def marcEngine(marcObj, cursor=cursor, mkconn=mkconn):
             # 总数量除以10，一般是有余数的，所以最后别忘记在主程序末尾在commit一次
             logger.info(insertCount)
             cursor.commit()
-    except:
-        raise
+    except Exception as e:
+        logger.exception(e)
+        find_value_error()
 
 def check(cursor=cursor,mkconn=mkconn):
     sqlI = "select ISBN from booklist where replace(ISBN,'-','') = ?"
@@ -285,10 +329,25 @@ def isbnTosql(path='D:\\Pycharm\\isbnSpider\\data\\testData.txt', cursor=cursor,
     fTt = open(path, 'r')
     isbnS = []
     sql = 'INSERT INTO preISBN( ISBN ) VALUES ( ? )'
+    sql_check0 = "select isbn from attbooklist where replace(isbn,'-','') = ?"
+    sql_check1 = "select isbn from booklist where replace(isbn,'-','') = ?"
+    ign_num = 0
     try:
         for li in fTt:
-            cursor.execute(sql, li[:-1])
-            isbnS.append(li[:-1])
+            recorded = False
+            cursor.execute(sql_check0, li[:-1])
+            if cursor.fetchall():
+                recorded = True
+            if not recorded:
+                cursor.execute(sql_check1, li[:-1])
+                if cursor.fetchall():
+                    recorded = True
+            if not recorded:
+                cursor.execute(sql, li[:-1])
+                isbnS.append(li[:-1])
+            else:
+                ign_num += 1
+                logger.info('-'*20 + "|| " + li[:-1] + " Existed!! ||" + str(ign_num))
         # 本表自身去重
         cursor.execute('SELECT DISTINCT ISBN INTO "#t1" FROM preISBN')
         cursor.execute('TRUNCATE TABLE preISBN')
@@ -297,6 +356,8 @@ def isbnTosql(path='D:\\Pycharm\\isbnSpider\\data\\testData.txt', cursor=cursor,
     except:
         raise
     return isbnS
+
+
 
 
 """
@@ -324,13 +385,13 @@ catadict['Caste']=''
 
 if __name__ == '__main__':
     # isbnS = isbnData(path='D:\\桌面\\isbn1.0.txt')
-    # isbnS = isbnTosql(path='D:\\桌面\\isbn1.0.txt')
-    # isbnS = isbnData()
-    # marc(isbnS)
-    # delISBN(insertRecord)
+    isbnS = isbnTosql(path='D:\\桌面\\isbn1.0.txt')
+    isbnS = isbnData()
+    marc(isbnS)
+    delISBN(insertRecord)
     # cursor.commit()
     # isbnIn.closed()
-    check()
+    # check()
 
     # isbnS = sqlData()
     # isbnS = ['9787535479426']
